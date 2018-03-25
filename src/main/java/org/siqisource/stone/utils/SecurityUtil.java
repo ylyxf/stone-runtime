@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.util.StringUtils;
 
 public class SecurityUtil {
 
@@ -35,11 +36,17 @@ public class SecurityUtil {
 	}
 
 	public static String encode(String source) {
+		if (StringUtils.isEmpty(source)) {
+			return "";
+		}
 		String dist = aesCipherService.encrypt(source.getBytes(), getKey().getEncoded()).toHex();
 		return dist;
 	}
 
 	public static String decode(String source) {
+		if (StringUtils.isEmpty(source)) {
+			return "";
+		}
 		String dist = new String(aesCipherService.decrypt(Hex.decode(source), getKey().getEncoded()).getBytes());
 		return dist;
 

@@ -12,16 +12,20 @@ public class SqlServerDialect extends AbstractDialect {
 
 	@Override
 	public String getKeySelector(KeyGenerator keyGenerator, Model model) {
-		return null;
+		if (keyGenerator == KeyGenerator.uuid) {
+			return "select NEWID()";
+		} else {
+			throw new RuntimeException("only uuid and sequence  is supported for selectKey of SqlServer  ");
+		}
 	}
 
 	@Override
 	public String getSelectKeyOrder() {
-		return null;
+		return "BEFORE";
 	}
 
 	@Override
-	public String getLimitString(String sql, int skipResults, int maxResults) {
+	public String getLimitString(String sql, int skipResults, int maxResults,boolean useEacapeCharset) {
 		return "";
 	}
 

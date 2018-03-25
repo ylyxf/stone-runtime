@@ -7,7 +7,6 @@ import org.siqisource.stone.mybatis.condition.expression.CompareExpression;
 import org.siqisource.stone.mybatis.condition.expression.Order;
 import org.siqisource.stone.mybatis.condition.expression.OrderByExpression;
 
-
 public class Condition {
 
 	/** expressions */
@@ -60,6 +59,15 @@ public class Condition {
 	public Condition order(Order order) {
 		if (order != null) {
 			this.order(order.getField(), order.getDirection());
+		}
+		return this;
+	}
+
+	public Condition order(List<Order> orderList) {
+		if (orderList != null) {
+			for (Order order : orderList) {
+				this.order(order);
+			}
 		}
 		return this;
 	}

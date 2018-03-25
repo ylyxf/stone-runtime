@@ -6,7 +6,7 @@ import org.siqisource.stone.mybatis.model.Model;
 public class PostgreSqlDialect extends AbstractDialect {
 
 	@Override
-	public String getLimitString(String sql, int offset, int limit) {
+	public String getLimitString(String sql, int offset, int limit,boolean useEacapeCharset) {
 		sql = sql.replaceAll("[\r\n]", " ").replaceAll("\\s{2,}", " ") + " limit " + limit + " offset " + offset;
 		return sql;
 	}

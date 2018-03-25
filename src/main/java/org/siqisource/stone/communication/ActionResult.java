@@ -1,4 +1,4 @@
-package org.siqisource.stone.result;
+package org.siqisource.stone.communication;
 
 public class ActionResult {
 

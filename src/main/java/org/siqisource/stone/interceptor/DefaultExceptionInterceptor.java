@@ -5,8 +5,7 @@ import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.siqisource.stone.result.ActionResult;
-import org.siqisource.stone.result.BusinessException;
+import org.siqisource.stone.communication.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -34,13 +33,12 @@ public class DefaultExceptionInterceptor implements HandlerExceptionResolver {
 			if (responseBodyAnn != null) {
 				MappingJackson2JsonView view = new MappingJackson2JsonView();
 				mv.setView(view);
-				ActionResult actionResult = new ActionResult(false);
+				mv.addObject("status", "failed");
 				if (ex instanceof BusinessException) {
-					actionResult.setMessage(ex.getMessage());
+					mv.addObject("message", ex.getMessage());
 				} else {
-					actionResult.setMessage("系统发生了未识别的错误");
+					mv.addObject("message", "系统发生了未识别的错误");
 				}
-				mv.addObject(actionResult);
 			}
 		} else {
 			mv.setViewName("error/Error");

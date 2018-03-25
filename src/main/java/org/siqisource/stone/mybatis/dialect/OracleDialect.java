@@ -32,7 +32,16 @@ public class OracleDialect extends AbstractDialect {
 	}
 
 	@Override
-	public String getLimitString(String sql, int skipResults, int maxResults) {
+	public String getLimitString(String sql, int skipResults, int maxResults, boolean useEacapeCharset) {
+
+		String gt = ">";
+		String lt = "<";
+
+		if (useEacapeCharset) {
+			gt = "&gt;";
+			lt = "&lt;";
+		}
+
 		sql = sql.trim();
 
 		StringBuffer pagingSelect = new StringBuffer(sql.length() + 100);
@@ -41,8 +50,8 @@ public class OracleDialect extends AbstractDialect {
 
 		pagingSelect.append(sql);
 
-		pagingSelect.append(
-				" ) row_ ) where rownum_ &gt; " + skipResults + " and rownum_ &lt;= " + (skipResults + maxResults));
+		pagingSelect.append(" ) row_ ) where rownum_ " + gt + " " + skipResults + " and rownum_  " + lt + "= "
+				+ (skipResults + maxResults));
 
 		return pagingSelect.toString();
 	}

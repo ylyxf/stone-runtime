@@ -16,10 +16,9 @@ import org.siqisource.stone.mybatis.dialect.Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 @Intercepts({
 		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
-@Component
+//@Component
 public class PaginationInterceptor implements Interceptor {
 
 	@Autowired
@@ -43,7 +42,7 @@ public class PaginationInterceptor implements Interceptor {
 
 		String originalSql = (String) metaStatementHandler.getValue("delegate.boundSql.sql");
 		metaStatementHandler.setValue("delegate.boundSql.sql",
-				dialect.getLimitString(originalSql, rowBounds.getOffset(), rowBounds.getLimit()));
+				dialect.getLimitString(originalSql, rowBounds.getOffset(), rowBounds.getLimit(), false));
 		metaStatementHandler.setValue("delegate.rowBounds.offset", RowBounds.NO_ROW_OFFSET);
 		metaStatementHandler.setValue("delegate.rowBounds.limit", RowBounds.NO_ROW_LIMIT);
 		return invocation.proceed();

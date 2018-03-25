@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -23,6 +22,8 @@ import org.siqisource.stone.mybatis.model.Model;
 import org.siqisource.stone.mybatis.model.Property;
 
 public class XMLBuilder {
+
+	public static Boolean PRINT_XML = false;
 
 	private Model model;
 
@@ -85,7 +86,9 @@ public class XMLBuilder {
 		}
 
 		result.append(foot());
-		//System.out.println(result.toString());
+		if (PRINT_XML) {
+			System.out.println(result.toString());
+		}
 		return new ByteArrayInputStream(result.toString().getBytes());
 	}
 
@@ -122,7 +125,7 @@ public class XMLBuilder {
 			if (keyGenerator == KeyGenerator.sequence) {
 				sbString.append(" resultType='integer' ");
 			} else if (keyGenerator == KeyGenerator.uuid && !(dialect instanceof OracleDialect)) {
-				sbString.append(" resultType='" + UUID.class.getName() + "' ");
+				sbString.append(" resultType='" + String.class.getName() + "' ");
 			} else {
 				sbString.append(" resultType='string' ");
 			}
@@ -308,7 +311,7 @@ public class XMLBuilder {
 				sbSql.append(" AND ");
 			}
 		}
-		String sql = this.dialect.getLimitString(sbSql.toString(), 0, 1);
+		String sql = this.dialect.getLimitString(sbSql.toString(), 0, 1, true);
 
 		sbSqlXml.append(sql);
 		sbSqlXml.append("</select>");
