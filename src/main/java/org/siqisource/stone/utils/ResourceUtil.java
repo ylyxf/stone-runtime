@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.springframework.boot.ApplicationHome;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -43,7 +43,7 @@ public class ResourceUtil {
 
 	/**
 	 * 读取资源
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	public List<String> listResources(String folder) {
@@ -75,7 +75,7 @@ public class ResourceUtil {
 
 	/**
 	 * 释放资源
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	public void extraResources(String folder) {
