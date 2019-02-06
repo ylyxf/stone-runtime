@@ -11,8 +11,6 @@ public interface Dialect {
 
 	public String getSelectKeyOrder();
 
-	public String getLimitString(String sql, int skipResults, int maxResults,boolean useEacapeCharset);
-	
-	public String convertColumnToProperty(String column);
+	public String getLimitString(String sql, int skipResults, int maxResults, boolean useEacapeCharset);
 
 }
