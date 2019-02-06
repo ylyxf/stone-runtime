@@ -14,12 +14,11 @@ import org.siqisource.stone.mybatis.dialect.Dialect;
 import org.siqisource.stone.mybatis.model.Model;
 import org.siqisource.stone.mybatis.model.Property;
 
- 
 public class ModelClazzReader {
 
 	/**
 	 * read model from class
-	 * 
+	 *
 	 * @param modelClazz
 	 * @param namespace
 	 *            is use for other tools ,default id the class name
@@ -61,7 +60,7 @@ public class ModelClazzReader {
 		}
 
 		try {
-			readModelFromDatabase(model, metaData, dialect);
+			readModelFromDatabase(model, metaData);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -69,12 +68,11 @@ public class ModelClazzReader {
 		return model;
 	}
 
-	public static Model readModelFromDatabase(Model model, DatabaseMetaData metaData, Dialect dialect)
-			throws SQLException {
+	public static Model readModelFromDatabase(Model model, DatabaseMetaData metaData) throws SQLException {
 		ResultSet rs = metaData.getTables(null, model.getTableSchema(), model.getTableName(), new String[] { "TABLE" });
 		if (rs.next()) {
 			rs.close();
-			readColumn(model, metaData, dialect);
+			readColumn(model, metaData);
 		} else {
 			rs.close();
 			throw new RuntimeException("model " + model.getName() + " point to table " + model.getTableName()
@@ -83,7 +81,7 @@ public class ModelClazzReader {
 		return model;
 	}
 
-	private static void readColumn(Model model, DatabaseMetaData metaData, Dialect dialect) throws SQLException {
+	private static void readColumn(Model model, DatabaseMetaData metaData) throws SQLException {
 		Map<String, Field> fieldMap = new HashMap<String, Field>();
 		readAllClazzFields(model.getClazz(), fieldMap);
 
@@ -91,7 +89,7 @@ public class ModelClazzReader {
 
 		while (rs.next()) {
 			String columnName = rs.getString("COLUMN_NAME");
-			String propertyName = dialect.convertColumnToProperty(columnName);
+			String propertyName = NameConverter.underlineToCamelFirstLower(columnName);
 			if (!fieldMap.containsKey(propertyName)) {
 				continue;
 			}
@@ -133,7 +131,7 @@ public class ModelClazzReader {
 
 	/**
 	 * use the child when same name property in superclass
-	 * 
+	 *
 	 * @param clazz
 	 * @param fieldMap
 	 */
