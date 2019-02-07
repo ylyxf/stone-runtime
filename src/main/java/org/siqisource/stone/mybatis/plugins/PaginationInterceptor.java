@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 @Intercepts({
 		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
-//@Component
 public class PaginationInterceptor implements Interceptor {
 
 	@Autowired
@@ -33,6 +32,9 @@ public class PaginationInterceptor implements Interceptor {
 	}
 
 	public Object intercept(Invocation invocation) throws Throwable {
+		Connection connection = (Connection)invocation.getArgs()[0];
+		dialect.setClientInfo(connection);
+
 		StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
 		MetaObject metaStatementHandler = SystemMetaObject.forObject(statementHandler);
 		RowBounds rowBounds = (RowBounds) metaStatementHandler.getValue("delegate.rowBounds");

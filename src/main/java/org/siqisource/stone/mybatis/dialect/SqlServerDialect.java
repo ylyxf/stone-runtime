@@ -1,5 +1,7 @@
 package org.siqisource.stone.mybatis.dialect;
 
+import java.sql.Connection;
+
 import org.siqisource.stone.mybatis.annotation.KeyGenerator;
 import org.siqisource.stone.mybatis.model.Model;
 
@@ -27,6 +29,12 @@ public class SqlServerDialect extends AbstractDialect {
 	@Override
 	public String getLimitString(String sql, int skipResults, int maxResults,boolean useEacapeCharset) {
 		return "";
+	}
+
+	@Override
+	public void setClientInfo(Connection connection) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
