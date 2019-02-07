@@ -26,6 +26,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		String requestId = MDC.get("requestId");
 		if (requestId == null) {
+			System.out.println(request.getRequestURI());
+
 			requestId = String.valueOf(SecurityUtils.getSubject().getPrincipal()) + ":" + sdf.format(new Date()) + ":"
 					+ UUID.randomUUID();
 			MDC.put("requestId", requestId);

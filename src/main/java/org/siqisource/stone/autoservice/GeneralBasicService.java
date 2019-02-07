@@ -1,6 +1,5 @@
 package org.siqisource.stone.autoservice;
 
-
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -9,20 +8,13 @@ import org.siqisource.stone.mybatis.condition.PartitiveFields;
 import org.siqisource.stone.mybatis.condition.SqlKey;
 import org.springframework.transaction.annotation.Transactional;
 
-
-public class AbstractGeneralService<M> implements GeneralService<M> {
+public class GeneralBasicService<M> implements GeneralService<M> {
 
 	private AutoMapper<M> autoMapper = null;
 
-	protected static PartitiveFields LOGIC_DELETE = new PartitiveFields();
-
-	static {
-		LOGIC_DELETE.put(SqlKey.LOGIC_DELETED, true);
-	}
-
 	/**
 	 * Subclass need tell parent which mapper it is using.
-	 * 
+	 *
 	 * @return
 	 */
 	protected GeneralMapper<M> getMapper() {
@@ -36,7 +28,7 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * insert object to database
-	 * 
+	 *
 	 * @param model
 	 */
 	public void insert(M model) {
@@ -45,7 +37,7 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * insert object to database batch
-	 * 
+	 *
 	 * @param model
 	 */
 	@Transactional
@@ -57,7 +49,7 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * insert some fields of the table
-	 * 
+	 *
 	 * @param fields
 	 */
 	public void insertPartitive(PartitiveFields fields) {
@@ -67,10 +59,10 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * read object from database
-	 * 
+	 *
 	 * @param Condition
 	 *            condition
-	 * 
+	 *
 	 * @return first record of result set
 	 */
 	public M readOne(Condition condition) {
@@ -84,7 +76,7 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * count
-	 * 
+	 *
 	 * @param condition
 	 * @return
 	 */
@@ -94,7 +86,7 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * pagination list
-	 * 
+	 *
 	 * @param condition
 	 * @param rowBounds
 	 * @return
@@ -105,7 +97,7 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * list
-	 * 
+	 *
 	 * @param condition
 	 * @return
 	 */
@@ -115,7 +107,7 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * update batch records
-	 * 
+	 *
 	 * @param condition
 	 */
 	@Override
@@ -126,20 +118,11 @@ public class AbstractGeneralService<M> implements GeneralService<M> {
 
 	/**
 	 * delete batch record from database
-	 * 
+	 *
 	 * @param condition
 	 */
 	public void delete(Condition condition) {
 		getMapper().deleteBatch(condition);
-	}
-
-	/**
-	 * delete batch record from logic
-	 * 
-	 * @param condition
-	 */
-	public void logicDelete(Condition condition) {
-		this.updatePartitive(LOGIC_DELETE, condition);
 	}
 
 }
