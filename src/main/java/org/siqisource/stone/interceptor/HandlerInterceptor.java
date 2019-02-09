@@ -25,10 +25,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String requestId = MDC.get("requestId");
-		if (requestId == null) {
-			System.out.println(request.getRequestURI());
-
-			requestId = String.valueOf(SecurityUtils.getSubject().getPrincipal()) + ":" + sdf.format(new Date()) + ":"
+		if (!"/error".equals(request.getRequestURI())) {
+			requestId = String.valueOf(SecurityUtils.getSubject().getPrincipal()) + "#" + sdf.format(new Date()) + "#"
 					+ UUID.randomUUID();
 			MDC.put("requestId", requestId);
 		}
@@ -36,11 +34,15 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 
+
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		//从请求头中取得鉴权需求，并将鉴权结果放到响应头中
-
-		MDC.clear();
+		// 从请求头中取得鉴权需求，并将鉴权结果放到响应头中
+		try {
+			MDC.clear();
+		} catch (Exception e) {
+			logger.error("Error when clean MDC", e);
+		}
 	}
 }

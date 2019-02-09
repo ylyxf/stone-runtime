@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -125,7 +126,7 @@ public class XMLBuilder {
 			if (keyGenerator == KeyGenerator.sequence) {
 				sbString.append(" resultType='integer' ");
 			} else if (keyGenerator == KeyGenerator.uuid && !(dialect instanceof OracleDialect)) {
-				sbString.append(" resultType='" + String.class.getName() + "' ");
+				sbString.append(" resultType='" + UUID.class.getName() + "' ");
 			} else {
 				sbString.append(" resultType='string' ");
 			}
@@ -218,7 +219,7 @@ public class XMLBuilder {
 		// delete ',' in the last '#{ xxx ,jdbcType=yyy} ,'
 		sbString.deleteCharAt(sbString.length() - 1);
 		sbString.append(" WHERE ");
-		sbString.append(whereId());
+		sbString.append(whereIdInMode());
 		sbString.append("</update>");
 		return sbString.toString();
 	}
@@ -270,10 +271,19 @@ public class XMLBuilder {
 		return sbString.toString();
 	}
 
+	private String whereIdInMode() {
+		StringBuffer sbString = new StringBuffer();
+		Property property = model.getPrimaryProperty();
+		sbString.append(
+				property.getColumnName() + "=#{" + property.getName() + " , jdbcType=" + property.getJdbcType() + "}");
+		String result = sbString.toString();
+		return result;
+	}
+
 	private String whereId() {
 		StringBuffer sbString = new StringBuffer();
 		Property property = model.getPrimaryProperty();
-		sbString.append(property.getColumnName() + "=#{id}");
+		sbString.append(property.getColumnName() + "=#{id , jdbcType=" + property.getJdbcType() + "}");
 		String result = sbString.toString();
 		return result;
 	}

@@ -35,8 +35,18 @@ public class DefaultExceptionInterceptor implements HandlerExceptionResolver {
 		} else if (ex instanceof UnauthorizedException) {
 			mv.addObject("message", "您访问了未授权的资源[" + requestId + "]");
 		} else {
-			mv.addObject("message", "系统发生了未识别的错误[" + requestId + "]");
+			String message = "";
+			String exMessage = ex.getMessage();
+			if (requestId == null) {
+				message = "系统发生了未识别的错误[" + ex.getMessage() + "]";
+			} else if (exMessage.indexOf("duplicate key") != -1) {
+				message = "记录主键重复[" + requestId + "]";
+			} else {
+				message = "系统发生了未识别的错误[" + requestId + "]";
+			}
+			mv.addObject("message", message);
 		}
+
 		response.setStatus(500);
 
 		return mv;
