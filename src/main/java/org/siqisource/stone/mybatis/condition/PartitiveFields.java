@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.siqisource.stone.mybatis.utils.NameConverter;
 
-
-
 public class PartitiveFields extends HashMap<String, Object> {
 
 	/**
@@ -16,9 +14,7 @@ public class PartitiveFields extends HashMap<String, Object> {
 
 	/**
 	 * prepare Fields to insert
-	 * 
-	 * @param fields
-	 * @return
+	 *
 	 */
 	public void prepareInsertSql() {
 		if (this.get("_insertFields") == null) {
@@ -47,8 +43,7 @@ public class PartitiveFields extends HashMap<String, Object> {
 
 	/**
 	 * prepare sql to update
-	 * 
-	 * @return
+	 *
 	 */
 	public void prepareUpdateSql() {
 		if (this.get("_updateSql") == null) {

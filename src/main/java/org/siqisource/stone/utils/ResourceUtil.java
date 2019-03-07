@@ -44,7 +44,9 @@ public class ResourceUtil {
 	/**
 	 * 读取资源
 	 *
-	 * @throws IOException
+	 * @param folder
+	 *            folder
+	 * @return listResources
 	 */
 	public List<String> listResources(String folder) {
 		try {
@@ -76,7 +78,9 @@ public class ResourceUtil {
 	/**
 	 * 释放资源
 	 *
-	 * @throws IOException
+	 * @param folder
+	 *            folder
+	 *
 	 */
 	public void extraResources(String folder) {
 		try {

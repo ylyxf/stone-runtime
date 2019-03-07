@@ -19,10 +19,17 @@ public class ModelClazzReader {
 	/**
 	 * read model from class
 	 *
+	 * @param mapperClazz
+	 *            mapperClazz
 	 * @param modelClazz
-	 * @param namespace
-	 *            is use for other tools ,default id the class name
-	 * @return
+	 *            modelClazz
+	 * @param metaData
+	 *            metaData
+	 * @param isSingleKey
+	 *            isSingleKey
+	 * @param dialect
+	 *            dialect
+	 * @return Model
 	 */
 	public static Model readModel(Class<?> mapperClazz, Class<?> modelClazz, DatabaseMetaData metaData,
 			boolean isSingleKey, Dialect dialect) {

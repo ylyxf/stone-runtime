@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.siqisource.stone.mybatis.condition.Condition;
 import org.siqisource.stone.mybatis.condition.PartitiveFields;
-import org.siqisource.stone.mybatis.condition.SqlKey;
 import org.springframework.transaction.annotation.Transactional;
 
 public class GeneralBasicService<M> implements GeneralService<M> {
@@ -15,13 +14,14 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	/**
 	 * Subclass need tell parent which mapper it is using.
 	 *
-	 * @return
+	 * @return GeneralMapper
 	 */
 	protected GeneralMapper<M> getMapper() {
 		return (GeneralMapper<M>) this.autoMapper;
 	}
 
 	@Override
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setAutoMapper(AutoMapper autoMapper) {
 		this.autoMapper = autoMapper;
 	}
@@ -30,6 +30,7 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 * insert object to database
 	 *
 	 * @param model
+	 *            model entity
 	 */
 	public void insert(M model) {
 		getMapper().insert(model);
@@ -38,7 +39,8 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	/**
 	 * insert object to database batch
 	 *
-	 * @param model
+	 * @param models
+	 *            models
 	 */
 	@Transactional
 	public void insertBatch(List<M> models) {
@@ -51,6 +53,7 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 * insert some fields of the table
 	 *
 	 * @param fields
+	 *            fields map
 	 */
 	public void insertPartitive(PartitiveFields fields) {
 		fields.prepareInsertSql();
@@ -60,7 +63,7 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	/**
 	 * read object from database
 	 *
-	 * @param Condition
+	 * @param condition
 	 *            condition
 	 *
 	 * @return first record of result set
@@ -78,7 +81,8 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 * count
 	 *
 	 * @param condition
-	 * @return
+	 *            condition
+	 * @return count
 	 */
 	public int count(Condition condition) {
 		return getMapper().count(condition);
@@ -88,8 +92,10 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 * pagination list
 	 *
 	 * @param condition
+	 *            condition
 	 * @param rowBounds
-	 * @return
+	 *            rowBounds
+	 * @return list
 	 */
 	public List<M> list(Condition condition, RowBounds rowBounds) {
 		return getMapper().list(condition, rowBounds);
@@ -99,7 +105,8 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 * list
 	 *
 	 * @param condition
-	 * @return
+	 *            condition
+	 * @return list
 	 */
 	public List<M> list(Condition condition) {
 		return getMapper().list(condition);
@@ -109,6 +116,7 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 * update batch records
 	 *
 	 * @param condition
+	 *            condition
 	 */
 	@Override
 	public void updatePartitive(PartitiveFields fields, Condition condition) {
@@ -120,6 +128,7 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 * delete batch record from database
 	 *
 	 * @param condition
+	 *            condition
 	 */
 	public void delete(Condition condition) {
 		getMapper().deleteBatch(condition);

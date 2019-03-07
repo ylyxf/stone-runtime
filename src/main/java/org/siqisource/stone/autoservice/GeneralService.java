@@ -13,13 +13,15 @@ public interface GeneralService<M> extends AutoService<M> {
 	 * insert object to database
 	 *
 	 * @param model
+	 *            model
 	 */
 	public void insert(M model);
 
 	/**
 	 * insert object to database batch
 	 *
-	 * @param model
+	 * @param models
+	 *            models
 	 */
 	public void insertBatch(List<M> models);
 
@@ -27,13 +29,14 @@ public interface GeneralService<M> extends AutoService<M> {
 	 * insert some fields of the table
 	 *
 	 * @param fields
+	 *            fields
 	 */
 	public void insertPartitive(@Param("fields") PartitiveFields fields);
 
 	/**
 	 * read object from database
 	 *
-	 * @param Condition
+	 * @param condition
 	 *            condition
 	 *
 	 * @return first record of result set
@@ -44,7 +47,8 @@ public interface GeneralService<M> extends AutoService<M> {
 	 * count the querying record
 	 *
 	 * @param condition
-	 * @return
+	 *            condition
+	 * @return count
 	 */
 	int count(Condition condition);
 
@@ -52,8 +56,10 @@ public interface GeneralService<M> extends AutoService<M> {
 	 * list the pagination querying result
 	 *
 	 * @param condition
+	 *            condition
 	 * @param rowBounds
-	 * @return
+	 *            rowBounds
+	 * @return list
 	 */
 	List<M> list(Condition condition, RowBounds rowBounds);
 
@@ -61,14 +67,18 @@ public interface GeneralService<M> extends AutoService<M> {
 	 * list the querying result
 	 *
 	 * @param condition
-	 * @return
+	 *            condition
+	 * @return list
 	 */
 	List<M> list(Condition condition);
 
 	/**
 	 * update batch records
 	 *
+	 * @param fields
+	 *            fields
 	 * @param condition
+	 *            condition
 	 */
 	public void updatePartitive(PartitiveFields fields, @Param("condition") Condition condition);
 

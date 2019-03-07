@@ -19,22 +19,22 @@ public interface SingleKeyService<M, K> extends AutoService<M> {
 	/**
 	 * update database
 	 *
-	 * @param model
+	 * @param model model
 	 */
 	public void update(M model);
 
 	/**
 	 * update database
 	 *
-	 * @param model
+	 * @param models models
 	 */
 	public void updateBatch(List<M> models);
 
 	/**
 	 * update some fields of the table
 	 *
-	 * @param fields
-	 * @param id
+	 * @param fields fields
+	 * @param id id
 	 */
 	public void updatePartitive(PartitiveFields fields, @Param("id") K id);
 
@@ -49,7 +49,7 @@ public interface SingleKeyService<M, K> extends AutoService<M> {
 	/**
 	 * delete batch record from database
 	 *
-	 * @param condition
+	 * @param idList idList
 	 */
 	public void deleteBatch(K[] idList);
 

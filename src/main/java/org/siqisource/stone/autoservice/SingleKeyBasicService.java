@@ -18,7 +18,7 @@ public class SingleKeyBasicService<M, K> extends GeneralBasicService<M> implemen
 	/**
 	 * Subclass need tell parent which mapper it is using.
 	 *
-	 * @return
+	 * @return SingleKeyMapper
 	 */
 	@SuppressWarnings("unchecked")
 	protected SingleKeyMapper<M, K> getMapper() {
@@ -39,7 +39,7 @@ public class SingleKeyBasicService<M, K> extends GeneralBasicService<M> implemen
 	/**
 	 * update database
 	 *
-	 * @param model
+	 * @param model model
 	 */
 	public void update(M model) {
 		getMapper().update(model);
@@ -48,8 +48,8 @@ public class SingleKeyBasicService<M, K> extends GeneralBasicService<M> implemen
 	/**
 	 * update some fields of the table
 	 *
-	 * @param fields
-	 * @param id
+	 * @param fields fields
+	 * @param id id
 	 */
 	public void updatePartitive(PartitiveFields fields, K id) {
 		fields.prepareUpdateSql();
@@ -59,7 +59,7 @@ public class SingleKeyBasicService<M, K> extends GeneralBasicService<M> implemen
 	/**
 	 * update batch records
 	 *
-	 * @param condition
+	 * @param models models
 	 */
 	@Transactional
 	public void updateBatch(List<M> models) {
@@ -82,7 +82,7 @@ public class SingleKeyBasicService<M, K> extends GeneralBasicService<M> implemen
 	/**
 	 * delete batch record from database
 	 *
-	 * @param condition
+	 * @param idList idList
 	 */
 	@Transactional
 	public void deleteBatch(K[] idList) {

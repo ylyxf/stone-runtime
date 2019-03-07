@@ -6,16 +6,15 @@ import org.siqisource.stone.mybatis.condition.PartitiveFields;
 
 /**
  * base mapper to be inherited
- * 
+ *
  * @author yulei
- * 
- * @param <M,K>
+ *
  */
 public interface SingleKeyMapper<M,K> extends GeneralMapper<M> {
 
 	/**
 	 * read object from database
-	 * 
+	 *
 	 * @param id
 	 *            primary key of the table
 	 * @return object
@@ -24,22 +23,22 @@ public interface SingleKeyMapper<M,K> extends GeneralMapper<M> {
 
 	/**
 	 * update database
-	 * 
-	 * @param model
+	 *
+	 * @param model model
 	 */
 	public void update(M model);
 
 	/**
 	 * update some fields of the table
-	 * 
-	 * @param fields
-	 * @param id
+	 *
+	 * @param fields fields
+	 * @param id id
 	 */
 	public void updatePartitive(@Param("fields") PartitiveFields fields, @Param("id") K id);
 
 	/**
 	 * delete from database
-	 * 
+	 *
 	 * @param id
 	 *            primary key of the table
 	 */
