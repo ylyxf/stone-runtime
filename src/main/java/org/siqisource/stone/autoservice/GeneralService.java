@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.siqisource.stone.communication.Page;
 import org.siqisource.stone.mybatis.condition.Condition;
 import org.siqisource.stone.mybatis.condition.PartitiveFields;
 
@@ -62,6 +63,15 @@ public interface GeneralService<M> extends AutoService<M> {
 	 * @return list
 	 */
 	List<M> list(Condition condition, RowBounds rowBounds);
+
+	/**
+	 * list the pagination querying result
+	 *
+	 * @param condition
+	 * @param rowBounds
+	 * @return
+	 */
+	Page<M> page(Condition condition, RowBounds rowBounds);
 
 	/**
 	 * list the querying result

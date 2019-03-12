@@ -3,6 +3,7 @@ package org.siqisource.stone.autoservice;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
+import org.siqisource.stone.communication.Page;
 import org.siqisource.stone.mybatis.condition.Condition;
 import org.siqisource.stone.mybatis.condition.PartitiveFields;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,6 +100,22 @@ public class GeneralBasicService<M> implements GeneralService<M> {
 	 */
 	public List<M> list(Condition condition, RowBounds rowBounds) {
 		return getMapper().list(condition, rowBounds);
+	}
+
+	/**
+	 * pagination list
+	 *
+	 * @param condition
+	 *            condition
+	 * @param rowBounds
+	 *            rowBounds
+	 * @return list
+	 */
+	public Page<M> page(Condition condition, RowBounds rowBounds) {
+		int count = this.count(condition);
+		List<M> pageList = this.list(condition, rowBounds);
+		Page<M> page = new Page<M>(count,pageList);
+		return page;
 	}
 
 	/**

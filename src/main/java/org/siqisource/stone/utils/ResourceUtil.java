@@ -1,7 +1,6 @@
 package org.siqisource.stone.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,20 +15,23 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 public class ResourceUtil {
 
-	private String homePath = null;
+	private static String homePath = null;
 
-	private Boolean runInJar = true;
+	private static Boolean runInJar = true;
 
-	public String getHomePath() {
+	public static String getHomePath() {
 		return homePath;
 	}
 
-	public Boolean getRunInJar() {
+	public static Boolean getRunInJar() {
 		return runInJar;
 	}
 
-	public ResourceUtil() {
-		ApplicationHome home = new ApplicationHome(getClass());
+	public static void init() {
+		if (homePath != null) {
+			return;
+		}
+		ApplicationHome home = new ApplicationHome(ResourceUtil.class);
 		File homeFolder = home.getSource();
 		String path = homeFolder.getAbsolutePath();
 		runInJar = !path.endsWith("classes");
@@ -48,7 +50,8 @@ public class ResourceUtil {
 	 *            folder
 	 * @return listResources
 	 */
-	public List<String> listResources(String folder) {
+	public static List<String> listResources(String folder) {
+		init();
 		try {
 			if (!runInJar) {
 				ClassPathResource classPathResource = new ClassPathResource(folder);
@@ -82,7 +85,8 @@ public class ResourceUtil {
 	 *            folder
 	 *
 	 */
-	public void extraResources(String folder) {
+	public static void extraResources(String folder) {
+		init();
 		try {
 			File destDir = new File(homePath);
 			if (!runInJar) {

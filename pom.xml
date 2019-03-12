@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.siqisource</groupId>
 	<artifactId>stone-runtime</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.4</version>
 	<packaging>jar</packaging>
 	<url>https://github.com/ylyxf/stone-runtime.git</url>
 	<description>stone-runtime is a stone style app's base utils</description>
